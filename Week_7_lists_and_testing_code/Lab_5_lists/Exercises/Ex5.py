@@ -1,6 +1,6 @@
 '''
 ================
-Exercise 4
+Exercise 5
 ================
 
 Planet  Diameter (km)   Mass    Rotation period 
