@@ -14,7 +14,4 @@ e = 5/9
 f = (1/3)*5*(1/3)
 print('e is', e)
 print('f is', f)
-if e == f:
-    print('e equals f')
-if e != f:
-    print('e not equal to f')
+print(e == f))
