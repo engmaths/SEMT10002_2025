@@ -1,0 +1,344 @@
+Type: MC
+Title: Basic Addition
+Randomize
+1.
+What is the output of the following code?
+[HTML]<pre><code>
+x = 5<br>
+y = x + 3<br>
+<br>
+print(y)<br>
+</code></pre>[/HTML]
+*a. 8
+b. 5
+c. y
+d. Error
+
+Type: MC
+Title: Multiple Variable Printing
+Randomize
+2.
+What is the output of the following code?
+[HTML]<pre><code>
+a = 1<br>
+b = 2<br>
+<br>
+print(a, b)
+</code></pre>[/HTML]
+*a. 1 2
+b. 12
+c. a b
+d. (1, 2)
+
+Type: MC
+Title: Variable Reassignment
+Randomize
+3.
+What is the output of the following code?
+[HTML]<pre><code>
+a = 1<br>
+a = 2<br>
+<br>
+print(a)
+</code></pre>[/HTML]
+*a. 2
+b. 1
+c. a
+d. Error
+
+Type: MC
+Title: Multiple Assignment
+Randomize
+4.
+What is the output of the following code?
+[HTML]<pre><code>
+a = b = c = 10<br>
+print(a, b, c)<br>
+</code></pre>[/HTML]
+*a. 10 10 10
+b. 10
+c. a b c
+d. Error
+
+Type: MC
+Title: Multiple Assignment and Reassignment
+Randomize
+5.
+What is the output of the following code?
+[HTML]<pre><code>
+a = b = c = 10<br>
+<br>
+b = 5<br>
+<br>
+print(a, b, c)<br>
+</code></pre>[/HTML]
+*a. 10 5 10
+b. 5 5 5
+c. 10 10 10
+d. Error
+
+Type: MC
+Title: Type Function (Integer)
+Randomize
+6.
+What is the output of the following code?
+[HTML]<pre><code>
+print(type(10))<br>
+</code></pre>[/HTML]
+*a. <class 'int'>
+b. int
+c. 10
+d. integer
+
+Type: MC
+Title: Type Function (Boolean)
+Randomize
+7.
+What is the output of the following code?
+[HTML]<pre><code>
+hungry = True<br>
+<br>
+print(type(hungry))<br>
+</code></pre>[/HTML]
+*a. <class 'bool'>
+b. bool
+c. True
+d. boolean
+
+Type: MC
+Title: String Indexing (Positive)
+Randomize
+8.
+What is the output of the following code?
+[HTML]<pre><code>
+message = "Hello!"<br>
+<br>
+print(message[1])<br>
+</code></pre>[/HTML]
+*a. e
+b. H
+c. l
+d. Error
+
+Type: MC
+Title: String Indexing (Negative)
+Randomize
+9.
+What is the output of the following code?
+[HTML]<pre><code>
+message = "Hello!"<br>
+print(message[-1])<br>
+</code></pre>[/HTML]
+*a. !
+b. o
+c. H
+d. Error
+
+Type: MC
+Title: String Slicing (Explicit Start and End)
+Randomize
+10.
+What is the output of the following code?
+[HTML]<pre><code>
+message = "Hello!"<br>
+print(message[0:3])<br>
+</code></pre>[/HTML]
+*a. Hel
+b. Hell
+c. He
+d. el
+
+Type: MC
+Title: String Slicing (Implicit Start)
+Randomize
+11.
+What is the output of the following code?
+[HTML]<pre><code>
+message = "Hello!"<br>
+<br>
+print(message[:3])<br>
+</code></pre>[/HTML]
+*a. Hel
+b. H
+c. Hell
+d. Error
+
+Type: MC
+Title: String Slicing (Negative Start)
+Randomize
+12.
+What is the output of the following code?
+[HTML]<pre><code>
+message = "Hello!"<br>
+<br>
+print(message[-3:])<br>
+</code></pre>[/HTML]
+*a. lo!
+b. llo
+c. o!
+d. el
+
+Type: MC
+Title: String Method (upper)
+Randomize
+13.
+What is the output of the following code?
+[HTML]<pre><code>
+message = "geoff"<br>
+message_changed = message.upper()<br>
+<br>
+print(message_changed)<br>
+</code></pre>[/HTML]
+*a. GEOFF
+b. geoff
+c. Geoff
+d. Error
+
+Type: MC
+Title: String Method (find)
+Randomize
+14.
+What is the output of the following code?
+[HTML]<pre><code>
+message = "Hello!"<br>
+character = message.find('l')<br>
+<br>
+print(character)<br>
+</code></pre>[/HTML]
+*a. 2
+b. 3
+c. l
+d. 4
+
+Type: MC
+Title: Modulo Operator
+Randomize
+15.
+What is the output of the following code?
+[HTML]<pre><code>
+a = 12<br>
+b = 5<br>
+c = a % b<br>
+<br>
+print (c)<br>
+</code></pre>[/HTML]
+*a. 2
+b. 2.4
+c. 0
+d. 1
+
+Type: MC
+Title: Floor Division and Multiplication
+Randomize
+16.
+What is the output of the following code?
+[HTML]<pre><code>
+x = 10<br>
+y = 3<br>
+z = x // y<br>
+<br>
+print(z * y)<br>
+</code></pre>[/HTML]
+*a. 9
+b. 10
+c. 9.99
+d. 3
+
+Type: MC
+Title: Area and Perimeter Calculation
+Randomize
+17.
+What is the output of the following code?
+[HTML]<pre><code>
+length = 5<br>
+width = 3<br>
+area = length * width<br>
+perimeter = 2 * (length + width)<br>
+<br>
+print(area + perimeter)<br>
+</code></pre>[/HTML]
+*a. 31
+b. 15
+c. 16
+d. 23
+
+Type: MC
+Title: Type Conversion (Float to Int)
+Randomize
+18.
+What is the output of the following code?
+[HTML]<pre><code>
+p = 10<br>
+q = 2.5<br>
+r = p / q<br>
+<br>
+print(int(r))<br>
+</code></pre>[/HTML]
+*a. 4
+b. 4.0
+c. 5
+d. Error
+
+Type: MC
+Title: Subtraction Assignment Operator
+Randomize
+19.
+What is the output of the following code?
+[HTML]<pre><code>
+a = 10<br>
+a -= 5<br>
+<br>
+print(a)<br>
+</code></pre>[/HTML]
+*a. 5
+b. 10
+c. -5
+d. 15
+
+Type: MC
+Title: Modulo Assignment Operator
+Randomize
+20.
+What is the output of the following code?
+[HTML]<pre><code>
+a = 7<br>
+a %= 3<br>
+<br>
+print(a)<br>
+</code></pre>[/HTML]
+*a. 1
+b. 2
+c. 3
+d. 0
+
+Type: MC
+Title: Floor Division Assignment Operator
+Randomize
+21.
+What is the output of the following code?
+[HTML]<pre><code>
+a = 15<br>
+a //= 4<br>
+<br>
+print(a)<br>
+</code></pre>[/HTML]
+*a. 3
+b. 4
+c. 3.75
+d. 11
+
+Type: MC
+Title: Multiplication Assignment with Operator Precedence
+Randomize
+22.
+What is the output of the following code?
+[HTML]<pre><code>
+a = 2<br>
+a *= 3 + 1<br>
+<br>
+print(a)<br>
+</code></pre>[/HTML]
+*a. 8
+b. 7
+c. 6
+d. 9
