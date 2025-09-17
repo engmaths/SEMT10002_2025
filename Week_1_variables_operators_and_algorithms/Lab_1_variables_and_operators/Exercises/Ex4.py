@@ -1,14 +1,28 @@
 '''
-## Exercise 4 - Collision Detection
+## Exercise 4 - Boolean Grade Assignment
 
-If we have a circle centered at point $(u,v)$ and with radius $R$, we can calculate whether another point $(x, y)$ is inside the circle by checking whether the Euclidean distance between the points (i.e Pythagoras theorem for the hypotenuse - distance = $\sqrt((x-u)^2 + (y-v)^2)$) is less than the radius. Unfortunately, taking a square root is *not* one of the fundamental operations we have available to us (we'll see how to use the square root function soon).
+At the University of CPA, we use the standard university grading scheme:
 
-Without using the square root function, complete the code below to test whether the point (x,y) is with radius R of point (u,v).
+| Grade| Classification |
+|------|------|
+| 70+ | First |
+| 60-70 | 2.1  |
+| 50-60 | 2.2  |
+| 40-50 | 3rd  |
+| under 40 | Fail |
+
+The "grade" used to calculate your classification is a weighted average of the marks for the two assigments- 
+the first worth 20% and the second worth 80%. 
+However, we also have an additional rule that you must achieve at least a passing mark (40%) in the second assignment to pass the course.
+
+Write some code that uses Boolean expressions to determine the following students overall classification
+
+| Student | Assignment 1| Assignment 2 |
+| ------- | ----------- | -------------|
+| Martin  | 100         | 35           |
+| Arthur  | 40          | 65           |
+| Hemma   | 25          | 80           |
+| Josh    | 60          | 45           |
 '''
 
-x = '???'
-y = '???'
-u = '???'
-v = '???'
-R = '???'
-
+#Put your code here.
