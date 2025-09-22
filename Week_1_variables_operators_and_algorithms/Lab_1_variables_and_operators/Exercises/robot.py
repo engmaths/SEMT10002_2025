@@ -3,7 +3,7 @@
 ## Exercise 5 - Storing information about a robot
 
 The images here (https://github.com/engmaths/SEMT10002_2025/blob/main/media/week_1/romi.jpg) and
-https://github.com/engmaths/SEMT10002_2025/blob/main/media/week_1/Two-wheeled-differential-robot-kinematics.png
+https://github.com/engmaths/SEMT10002_2025/blob/main/media/week_1/robot_kinematics_2.png
 show a robot and a diagram labelling key parameters.  
 You can find more about this model of robot [here](https://www.pololu.com/category/202/romi-chassis-and-accessories).
 
