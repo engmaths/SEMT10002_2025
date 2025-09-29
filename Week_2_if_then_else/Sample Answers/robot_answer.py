@@ -44,12 +44,12 @@ robot_wheel_radius = 35 # mm
 # initial configuration
 robot_x_position = 0 # mm
 robot_y_position = 0 # mm
-robot_heading = 0 # radians CW from Y
+robot_heading = 0*3.14159 # radians CW from Y
 
 # commands for move duration and wheel speeds
-delta_t = 1 # seconds
+delta_t = 14 # seconds
 ang_speed_left =  1 # rad/s
-ang_speed_right = -1 # rad/s
+ang_speed_right = 0 # rad/s
 
 # convert angular speeds into linear speeds with linear_velocity = angular_velocity * radius
 linear_speed_left = ang_speed_left * robot_wheel_radius
