@@ -25,27 +25,27 @@ Suppose the robot moves for period `delta_t` with left wheel turning at `ang_spe
 Both speeds are in radians per second.  The robot will either follow an arc of a circle or turn on the spot.  
 Write some code to calculate the angle through which the robot turns during this move.'''
 
-#Store information in variables
+# constants about the robot
 robot_name = "Daneel"
 robot_radius = 160
 wheel_separation = 150
+robot_wheel_radius = 35
+
+# initial robot configuration
 robot_x_position = 0
 robot_y_position = 0
 robot_heading = 0
-robot_wheel_circumference = 35
-delta_t = 1
 
-#Create variables to represent the wheel speeds.
+# variables to represent the wheel speed commands and duration of movement
 ang_speed_left =  1
 ang_speed_right = -1
+delta_t = 1
 
-#Convert angular speeds into linear speeds with linear_velocity = angular_velocity * radius
-linear_speed_left = ang_speed_left * robot_wheel_circumference
-linear_speed_right = ang_speed_right * robot_wheel_circumference
-#Angular speed of the robot is given by the difference in speeds divided by wheel spacing
+# convert angular speeds into linear speeds with linear_velocity = angular_velocity * radius
+linear_speed_left = ang_speed_left * robot_wheel_radius
+linear_speed_right = ang_speed_right * robot_wheel_radius
+# angular speed of the robot is given by the difference in speeds divided by wheel spacing
 ang_speed_robot = (linear_speed_left - linear_speed_right) / wheel_separation
-#Multiply angular speed by time to get the amount the angle has changed.
+# multiply angular speed by time to get the amount the angle has changed.
 angle_change = ang_speed_robot * delta_t
 print(angle_change)
-
-
