@@ -47,7 +47,7 @@ robot_y_position = 0 # mm
 robot_heading = 0*3.14159 # radians CW from Y
 
 # commands for move duration and wheel speeds
-delta_t = 14 # seconds
+delta_t = 13.464 # seconds
 ang_speed_left =  1 # rad/s
 ang_speed_right = 0 # rad/s
 
