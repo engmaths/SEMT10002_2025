@@ -10,7 +10,8 @@
 
 from sys import argv
 import os
-from subprocess import run
+import re
+from subprocess import getstatusoutput
 
 # check arguments
 if len(argv)==1:
@@ -27,24 +28,49 @@ else:
 
 # run supplied script and capture output
 print('Running Python script', script_name)
-test_result = run(['python', script_name],
-                  capture_output=True,
-                  text=True,
-                  check=False)
+exit_code, output_text = getstatusoutput('python3 ' + script_name)
 
 # print some information if there's an error
-exit_code = test_result.returncode
 if exit_code==0:
     print('Script ran OK')
+    print('Output is below')
+    print()
+    print(output_text)
+    print()
 else:
     print('Script had error, code', exit_code)
     print('Output is below')
     print()
-    print(test_result.stdout)
-    print(test_result.stderr)
+    print(output_text)
+    print()
     raise ValueError('Script terminated with error')
 
-# script ran - so check outputs make sense
+# script ran - extract numbers
+numbers_as_text = re.findall('-?[0-9]+.?[0-9]*',
+                             output_text)
+#print('Things like numbers:',numbers_as_text)
+
+assert len(numbers_as_text)>=3, "Cannot find three numbers"
+
+number_values = [float(n) for n in numbers_as_text]
+#print('Number values:', number_values)
+
+if len(number_values)>3:
+    print("More than three numbers found - will just take final three")
+
+heading = number_values[-1]
+y_pos = number_values[-2]
+x_pos = number_values[-3]
+
+print('Got X =',x_pos,'Y =',y_pos,'heading =',heading)
+
+# check close to correct answers
+def are_close(a,b,tol=0.001):
+    return (a-b)**2 < tol**2
+
+assert are_close(x_pos,8.072), "Wrong X"
+assert are_close(y_pos,115.123), "Wrong Y"
+assert are_close(heading,0.140), "Wrong heading"
 
 # everything OK if we got to here
 print('Test passed: all lines verified')
