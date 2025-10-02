@@ -19,6 +19,6 @@ from robot_plotter import init_plot,snapshot,show_plot
 
 init_plot(0,0,0)
 
-# put your loop code, including `snapshot` calls, here
+# put your loops, including `snapshot` calls, here
 
 show_plot()
