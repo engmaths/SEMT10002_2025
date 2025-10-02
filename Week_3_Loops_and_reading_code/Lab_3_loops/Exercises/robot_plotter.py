@@ -3,8 +3,10 @@ from math import cos, sin
 import numpy as np
 import matplotlib.pyplot as plt
 
-robot_shape = 75*np.array([[-1,0,1,-1],
-                           [-1,1,-1,-1]])
+robot_size = 50
+
+robot_shape = robot_size*np.array([[-1,0,1,-1],
+                                  [-1,1,-1,-1]])
 
 x_log = []
 y_log = []
