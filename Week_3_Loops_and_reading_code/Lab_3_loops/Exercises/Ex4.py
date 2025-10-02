@@ -16,7 +16,60 @@ Write some code that takes a value and returns the label "a few" or "many" using
 Also return "none" for the case of zero and show a message for any values that do not make sense.
 '''
 
-#replace with trial values
-value = '???'
+from math import sin, cos
+from robot_plotter import init_plot,snapshot,show_plot
 
-# your logic code goes here
+# constants about the robot
+robot_name = "Daneel"
+robot_radius = 160
+wheel_separation = 150
+robot_wheel_radius = 35
+
+# initial robot configuration
+robot_x_position = 0
+robot_y_position = 0
+robot_heading = 0
+
+init_plot(0,0,0)
+
+for ii in range(20):
+
+    # variables to represent the wheel speed commands and duration of movement
+    stage = ii % 4
+    if stage==0:
+        ang_speed_left = 1
+        ang_speed_right = 0
+        delta_t = 13.464
+    elif stage==2:
+        ang_speed_left = 0
+        ang_speed_right = 1
+        delta_t = 13.464
+    else:
+        ang_speed_left = 1
+        ang_speed_right = 1
+        delta_t = 10
+
+    # convert angular speeds into linear speeds with linear_velocity = angular_velocity * radius
+    linear_speed_left = ang_speed_left * robot_wheel_radius
+    linear_speed_right = ang_speed_right * robot_wheel_radius
+    # angular speed of the robot is given by the difference in speeds divided by wheel spacing
+    ang_speed_robot = (linear_speed_left - linear_speed_right) / wheel_separation
+    # multiply angular speed by time to get the amount the angle has changed.
+    angle_change = ang_speed_robot * delta_t
+    ave_speed = 0.5*(linear_speed_left + linear_speed_right)
+
+    # sinc
+    if angle_change**2<0.01**2:
+        the_sinc = 1-(0.25*angle_change*angle_change/6.0)
+    else:
+        the_sinc = sin(0.5*angle_change)/(0.5*angle_change)
+
+    # update state
+    robot_x_position = robot_x_position + ave_speed*delta_t*the_sinc*sin(robot_heading + 0.5*angle_change)
+    robot_y_position = robot_y_position + ave_speed*delta_t*the_sinc*cos(robot_heading + 0.5*angle_change)
+    robot_heading = robot_heading + angle_change
+
+    print(robot_x_position,robot_y_position,robot_heading)
+    snapshot(robot_x_position,robot_y_position,robot_heading)
+
+show_plot()
