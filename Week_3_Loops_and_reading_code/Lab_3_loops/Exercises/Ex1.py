@@ -1,5 +1,5 @@
 '''
-## Exercise 1 - Positive and negative numbers
+## Exercise 1 - compound interest
 
 Write some code to calculate how much money you would have if you invested £20,000 in an account paying 5% interest
 and left it for 5 / 10 / 20 years. 
