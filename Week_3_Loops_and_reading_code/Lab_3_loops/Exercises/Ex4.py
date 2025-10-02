@@ -4,9 +4,9 @@
 Write code that simulates the robot performing the following moves, ten times in a row:
 
 1. Turn $180^o$ to the right, pivoting on the right wheel
-2. Drive $350mm$ forward
+2. Drive ten steps each of $35mm$ forward
 3. Turn $180^o$ to the left, pivoting on the left wheel
-4. Drive $350mm$ forward
+4. Repeat step 2
 
 > These were given as test cases in the Week 2 lab
 '''
