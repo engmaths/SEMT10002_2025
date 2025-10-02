@@ -1,25 +1,27 @@
 '''
-## Exercise 3 - Robot Line Sensor
+## Exercise 3 - Solving Kepler's equation
 
-Lots of robots use light sensors to detect and follow marker lines on the floor.  Sometimes fancier sensors like magnetic detection of guide wires are used, but the principles are the same.  Consider a robot with three sensors, one on the centreline and one on either side.  A sensor returns `True` if it is over a line and `False` otherwise.  The useful combinations are:
+Write some code using a `for` loop to solve Kepler's equation using fixed point iteration with 100 steps.
+Find the true anomaly $E$ for mean anomaly $M=1.54$ and eccentricity $e=0.3$.
 
-| Left sensor | Middle sensor | Right sensor | Meaning |
-| ---- | ---- | ---- | ---- |
-| False | True | False | Centred on line: drive straight |
-| True | True | False | Line is slightly to my left: turn left |
-| False | True | True | Line is slightly to my right: turn right |
-| True | False | False | Line is far to my left: slow and turn left |
-| False | False | True | Line is far to my right: slow and turn right |
+> Hint: re-arrange Kepler's equation into the form $E = f(E)$
 
-The image here (https://raw.githubusercontent.com/engmaths/SEMT10002_2025/refs/heads/main/media/week_2/robot_numbers.png) illustrates the set up.
-
-> Implement the control logic for the robot.  _There are lots of ways of doing this._
-
-> How many other possible readings are there?  And what might they mean?  Extend your code to handle everything.
+Add an early stopping criterion to end the iterations when Kepler's equation is satisfied to within $0.01\%$ of the mean anomaly $M$.
 
 '''
 
-# replace with trial values
-left_sensor = '???'
-middle_sensor = '???'
-right_sensor = '???'
+# get access to the sin function
+from math import sin
+
+# set and print the known values
+M = 1.54
+e = 0.3
+print('Mean anomaly M is',M)
+print('Eccentricity e is',e)
+
+# guess
+E = M
+
+# replace '???' and extend with your own code from here 
+for ii in '???':
+    '???'

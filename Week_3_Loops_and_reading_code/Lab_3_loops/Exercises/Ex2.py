@@ -1,17 +1,14 @@
 '''
-## Exercise 2 - Circles
+## Exercise 2 - Collatz Conjecture
 
-Suppose we have three circles in the $xy$-plane:
+Starting from any integer n, apply the rules: if even divide by 2, if odd multiply by 3 and add 1.
+The Collatz conjecture states that if we follow this sequence, we will eventually reach one.
+Although this problem looks simple, mathematicians are yet to prove it's true. 
 
-- Circle $C_1$ is centred at $(0, 0)$ with radius of length 5.
-- Circle $C_2$ is centred at $(2, 1)$ and has radius of length 2.
-- Circle $C_3$ is centred at $(-5, 0)$ and has a radius of length 3.
+We can use Python to explore this question numerically, seeing that at least for small number it seems to hold.
 
-The image here (https://raw.githubusercontent.com/engmaths/SEMT10002_2025/refs/heads/main/media/week_2/circles.png) illustrates the arrangement.
-
-> Using conditional statements, write a program which takes in the variables $x$ and $y$ and tells the user which circle(s) the point $(x, y)$ is in.
-
-> Think about the order in which your program evaluates the expressions? Is this the most efficient way to structure the code?
+Write some code that counts the number of steps it takes a given starting number to reach one.
+Then write some additional code to see which starting number under 1000 takes the most steps to reach 1. 
 '''
 
 # write your code here

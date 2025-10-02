@@ -1,10 +1,10 @@
 '''
 ## Exercise 1 - Positive and negative numbers
 
-Write some code that can determine whether a number (provided to you as a variable `number') is positive, negative, or zero.
-'''
+Write some code to calculate how much money you would have if you invested £20,000 in an account paying 5% interest
+and left it for 5 / 10 / 20 years. 
 
-# replace '???' with trial values
-number = '???'
+Next, write some code to calculate how long I'd have to leave my money invested before I had £100,000.
+'''
 
 # your code here
