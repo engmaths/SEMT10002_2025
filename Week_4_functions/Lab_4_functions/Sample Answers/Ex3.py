@@ -21,6 +21,19 @@ def find_bracket():
         low_limit = low_limit + 1
     return low_limit
 
+def bisect_bracket(low_limit,high_limit):
+    while high_limit>low_limit+0.00001:
+        midpoint = 0.5*(high_limit+low_limit)
+        if func(midpoint)<0:
+            low_limit = midpoint
+        else:
+            high_limit = midpoint
+    return low_limit, high_limit
+
 low_limit = find_bracket()
 print('Root is between',low_limit,'and',low_limit+1)
 print(func(low_limit),func(low_limit+1))
+
+low_limit, high_limit = bisect_bracket(low_limit,low_limit+1)
+print('Root is between',low_limit,'and',high_limit)
+print(func(low_limit),func(high_limit))
