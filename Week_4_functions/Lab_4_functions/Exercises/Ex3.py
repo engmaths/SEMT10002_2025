@@ -1,7 +1,7 @@
 '''
 Find the solution of the equation below numerically.
 
-$ 10e^{\frac{x}{10}} + x - 11 = 0$
+$ 10e^{\frac{x}{10}} + x - 17 = 0$
 
 Suggested approach:
  - Implement the expression above as a function
