@@ -25,23 +25,10 @@ robot_radius = 160 # mm
 # put any other constants you need here
 
 # utility functions...
-def sinc(x):
-    if x**2<0.01**2:
-        the_sinc = 1-(x*x/6.0)
-    else:
-        the_sinc = sin(x)/x
-    return the_sinc
+def func(x):
+    '???' # <-- replace with your code
 
 # any more functions you need in here
-def move_robot(ang_speed_left,ang_speed_right,delta_t):
-    # convert angular speeds into linear speeds with linear_velocity = angular_velocity * radius
-    linear_speed_left = ang_speed_left * robot_wheel_radius
-    linear_speed_right = ang_speed_right * robot_wheel_radius
-    # angular speed of the robot is given by the difference in speeds divided by wheel spacing
-    ang_speed_robot = (linear_speed_left - linear_speed_right) / wheel_separation
-    # multiply angular speed by time to get the amount the angle has changed.
-    angle_change = ang_speed_robot * delta_t
-    ave_speed = 0.5*(linear_speed_left + linear_speed_right)
 
 # main simulation function
 def main():
