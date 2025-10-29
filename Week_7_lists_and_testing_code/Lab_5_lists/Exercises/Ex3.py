@@ -16,7 +16,7 @@ list2 = [6, 3, 27, 3, 9, 12, 15, 2, 30, 5]
 higher_elements = []
 
 '''
-2. Extend your code to work with *any* number of lists. 
-For example, if we have three lists your code should create a new list containing the highest element from each pair of elements in the three lists.
-If we have four lists, your code should create a new list containing the highest element from each pair of elements in the four lists, and so on. 
+2. Modify your code (if necessary) to work with *any* number of lists. 
+For example, if we input three lists your code should create a new list containing the highest element at each index in the three lists.
+If we input four lists, your code should create a new list containing the highest element at each index in the four lists, and so on. 
 '''

@@ -60,15 +60,8 @@ i.e the top left value (5) should be replaced with 5^2=25 and so on.
 '''
 
 for ii in matrix:
-    for jj in ii:
-        jj = jj**2
-        print('jj', jj)
-print(matrix)
-
-for ii in matrix:
     for jj in range(len(ii)):
         ii[jj] = ii[jj]**2
-
 print(matrix)
 
 
@@ -79,7 +72,16 @@ is the cumulative sum of numbers in the first list.
 I.e if we have the list of numbers 
 list_of_numbers = [1, 3, 6, 10], 
 then our code should create a new list
-cumulative_sum = [1, 4, 10, 16]
+cumulative_sum = [1, 4, 10, 20]
 '''
 
 list_of_numbers = [1, 3, 6, 10]
+
+number_to_append = 0
+cumulative_sum = []
+
+for ii in list_of_numbers:
+    number_to_append += ii
+    cumulative_sum.append(number_to_append)
+
+print(cumulative_sum)

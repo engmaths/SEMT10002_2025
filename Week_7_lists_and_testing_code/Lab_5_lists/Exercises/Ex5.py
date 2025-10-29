@@ -11,11 +11,10 @@ Mars    6,794           0.11    24.623 (h)
 Jupiter 142,800         317.89  9.842  (h)  
 Saturn  120,000         95.17   10.233 (h)  
 Uranus  52,400          14.56   16 (h) 
-Neptune 48,400          17.24   18 (h)  
-Pluto   2,445           0.002   6.39 (d)  
+Neptune 48,400          17.24   18 (h)   
 
-1. Write a program that identifies and prints the name and density  (in kg m$^{-3}$)
- of the planet with the lowest density. Assume each planet is a perfect sphere
+1. Write a program that identifies and prints the name of the planet with the lowest density.
+  Assume each planet is a perfect sphere
 
 2. Write a program that identifies and outputs the names and rotation periods of planets
  with a rotation period shorter than Earth's.

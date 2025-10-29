@@ -36,7 +36,7 @@ is the cumulative sum of numbers in the first list.
 I.e if we have the list of numbers 
 list_of_numbers = [1, 3, 6, 10], 
 then our code should create a new list
-cumulative_sum = [1, 4, 10, 16]
+cumulative_sum = [1, 4, 10, 20]
 '''
 
 list_of_numbers = [1, 3, 6, 10]
