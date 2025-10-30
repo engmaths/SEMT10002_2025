@@ -19,7 +19,8 @@ map_x_max = 5000
 map_y_min  = 0
 map_y_max = 5000
 map_coords = ((map_x_min, map_x_max), (map_y_min, map_y_max))
-#This represents an obstacle at x = 100, y = 2250, with a width of 500 and a height of 800.
+
+# An obstacle with bottom left corner at at x = 100, y = 2250, width of 500 and height of 800.
 obstacle_x = 100
 obstacle_y = 2250
 obstacle_width = 4000
