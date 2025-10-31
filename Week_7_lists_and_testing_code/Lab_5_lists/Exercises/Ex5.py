@@ -3,19 +3,37 @@
 Exercise 5
 ================
 
-Planet  Diameter (km)   Mass    Rotation period 
-Mercury 4,878           0.06    58.65 (d) 
-Venus   12,100          0.82    243 (d)  
-Earth   12,756          1.00    23.934 (h)  
-Mars    6,794           0.11    24.623 (h)  
-Jupiter 142,800         317.89  9.842  (h)  
-Saturn  120,000         95.17   10.233 (h)  
-Uranus  52,400          14.56   16 (h) 
-Neptune 48,400          17.24   18 (h)   
+We are going to update the robot program so that the robot has, not just one, but *multiple* obstacles to avoid. 
 
-1. Write a program that identifies and prints the name of the planet with the lowest density.
-  Assume each planet is a perfect sphere
+The library robot_plotter.py has been updated...
 
-2. Write a program that identifies and outputs the names and rotation periods of planets
- with a rotation period shorter than Earth's.
+The function `show_plot(map_coords, goal=None, obstacle=None, pause=0)` had an optional argument `obstacle`, with format:
+((obstacle_x, obstacle_y), (obstacle_width, obstacle_height))
+
+Rather than plotting a single obstacle, the function can now plot any number of obstacles. 
+To achieve this, the optional argument, `obstacle`, has been replaced by an optional argument `obstacles` which 
+instead has the format of a list. Examples:
+
+
+1 obstacle
+
+[((obstacle_1_x, obstacle_1_y), (obstacle_1_width, obstacle_1_height))]
+
+
+2 obstacles
+
+[((obstacle_1_x, obstacle_1_y), (obstacle_1_width, obstacle_1_height)),
+ ((obstacle_2_x, obstacle_2_y), (obstacle_2_width, obstacle_2_height))]
+
+
+3 obstacles
+
+[((obstacle_1_x, obstacle_1_y), (obstacle_1_width, obstacle_1_height)),
+ ((obstacle_2_x, obstacle_2_y), (obstacle_2_width, obstacle_2_height)),
+ ((obstacle_3_x, obstacle_3_y), (obstacle_3_width, obstacle_3_height))]
+
+
+1. Copy your code from Consolidation Exercise 1, Task 2: Collision Avoidance. 
+
+2. Update your programme so that any number of obstacles can be generated, and the robot detects and avoids all obstcles
 '''
