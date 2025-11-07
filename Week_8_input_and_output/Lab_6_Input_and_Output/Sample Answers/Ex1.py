@@ -3,36 +3,26 @@
 Exercise 1
 ====================
 
-1. Make two lists containing the values [1, 4, 9] and [1, 8, 27].
-2. Make a nested list that contains both lists.
-3. Double the value of the first element in each list.
-4. Find the sum of the first element of the first list and the last element of the second list.
-5. Add the first element of the first list to the end of the second list.
+1. Import the file rainfall.csv
+2. Compute:
+    - the total annual rainfall 
+    - the average monthly rainfall
+    - the maximum and minimum monthly rainfall 
 
 '''
 
-# Make two lists containing the values [1, 4, 9] and [1, 8, 27]
-list1 = [1, 4, 9]
-list2 = [1, 8, 27]
+import csv
 
-# Make a nested list that contains both lists
-nested_list = [list1, list2]
-print(nested_list)
+with open('rainfall.csv') as file:
 
-# Double the value of the first element in each list
-for ii in nested_list:
-    ii[0] = 2*ii[0]
-print(list1, list2)
+    data = csv.reader(file)
 
-# Find the sum of the first element of the first list and the last element of the second list
-sum_of_elements = list1[0] + list2[-1]
-print(sum_of_elements)
+    data_list = list(data)
 
-# Add the first element of the first list to the last element of the second list
-list2.append(list1[0])
-print(list2)
+    print(data_list)
 
 
-
-
-
+total_annual_rainfall = '???'
+average_monthly_rainfall = '???'
+maximum_monthly_rainfall = '???'
+minimum_monthly_rainfall = '???'

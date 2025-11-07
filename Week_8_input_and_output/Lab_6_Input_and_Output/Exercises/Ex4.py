@@ -3,13 +3,23 @@
 Exercise 4
 ================
 
-1. Square numbers are defined as the numbers n^2 where n is an integer. 
-Write some code to create a list of all square numbers below 1000. 
-How many are there? What is the largest number below 1000?
+Write a program that:
 
-2. Triangular numbers T_n are  given by the formula $T_n = n(n+1)/2$.  
-Write some code to create a list of all triangular numbers below 1000. 
-How many are there? What is the largest number below 1000?
+1. Accepts multiple command-line arguments: 
+        python3 analyze_data.py <input_file> <output_file> <operation>
 
-3. Write some code to count how many square numbers (below 1000) are also triangular numbers.
+        <input_file> : the name of a CSV file containing numeric data.    
+        <output_file> : the name of the file to save the results.
+        <operation> : a mathematical operation to perform on each column (sum, mean, or standard deviation). 
+
+    Example terminal command:
+        python3 Ex4.py data.csv results.csv mean
+
+2. Reads numeric data from the input CSV file using the csv module.
+
+3. Performs the specified operation on each numeric column.
+
+4. Writes the results to the output CSV file.
+
+5. Displays a summary message in the terminal.
 '''
