@@ -5,7 +5,7 @@ Exercise 3
 
 1. Import the file xyz_data.csv 
 
-2. Print the (x,y,z) coordinates of each point from the file
+2. Print the (x,y,z) coordinates of each row in the file
 
 3. Compute the distance, d, to each point from the previous point
 (for the first point compute the distance from (0,0,0))
