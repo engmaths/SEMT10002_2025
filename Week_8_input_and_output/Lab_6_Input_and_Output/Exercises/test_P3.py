@@ -1,6 +1,6 @@
 # Test script for comparison assignment
 #
-# run: python test_P3.py ExerciseP3.py
+# run: python3 test_P3.py ExerciseP3.py
 #
 # The test script will run your file and check the statements for inconsistency
 #
