@@ -101,6 +101,43 @@ def goal_seek(iteration, phi_robot, distance_robot,
 
     return linear_speed_left, linear_speed_right
 
+def detect_obstacles (x, y, obstacles):
+    # Returns True if obstacle detected, else False 
+    obstacle_detected = False
+
+    # Detect obstacles    
+    for ii in obstacles:
+        obstacle_x = ii[0][0]
+        obstacle_y = ii[0][1]
+        obstacle_width = ii[1][0]
+        obstacle_height = ii[1][1]
+
+        if (obstacle_x < x < obstacle_x + obstacle_width and 
+            obstacle_y < y < obstacle_y + obstacle_height):
+
+            obstacle_detected = True
+
+    # Detect edges of map
+    if (x > map_x_max or
+        x < map_x_min or
+        y > map_y_max or
+        y < map_y_min):
+
+        obstacle_detected = True
+
+    return obstacle_detected   
+
+def avoid_obstacle_maneuver(wheel_separation):
+        # Turn 180 degrees on the spot if collision with obstacle is detected 
+        linear_displacement_left =  pi * wheel_separation / 2
+        linear_displacement_right = -linear_displacement_left
+
+        linear_speed_left = linear_displacement_left / delta_t
+        linear_speed_right = linear_displacement_right / delta_t 
+
+        return linear_speed_left, linear_speed_right
+
+
 def main():
 
     # initial robot configuration
@@ -134,47 +171,22 @@ def main():
 
         # Compute new position and orientation
         x, y, theta = compute_new_positioning(robot_x_position, robot_y_position, 
-                                            robot_heading, linear_speed_left, 
-                                            linear_speed_right, wheel_separation, 
-                                            delta_t)                   
+                                              robot_heading, linear_speed_left, 
+                                              linear_speed_right, wheel_separation, 
+                                              delta_t)                   
 
         # OBSTACLE AVOIDANCE 
-        obstacle_detected = False
-
-        # Detect any obstacles 
-        for ii in obstacles:
-            obstacle_x = ii[0][0]
-            obstacle_y = ii[0][1]
-            obstacle_width = ii[1][0]
-            obstacle_height = ii[1][1]
-
-            if (obstacle_x < x < obstacle_x + obstacle_width and 
-                obstacle_y < y < obstacle_y + obstacle_height):
-
-                obstacle_detected = True
-
-        # Detect edges of map
-        if (x > map_x_max or
-            x < map_x_min or
-            y > map_y_max or
-            y < map_y_min):
-
-            obstacle_detected = True
+        obstacle_detected = detect_obstacles(x, y, obstacles)
 
         if obstacle_detected:
 
             # Turn 180 degrees on the spot if collision with obstacle is detected 
-            linear_displacement_left =  pi * wheel_separation / 2
-            linear_displacement_right = -linear_displacement_left
-
-            linear_speed_left = linear_displacement_left / delta_t
-            linear_speed_right = linear_displacement_right / delta_t
+            linear_speed_left, linear_speed_right = avoid_obstacle_maneuver(wheel_separation)
 
             x, y, theta = compute_new_positioning(robot_x_position, robot_y_position, 
-                                                  robot_heading,linear_speed_left, 
-                                                  linear_speed_right, wheel_separation, 
-                                                  delta_t)
-        # --------------------------------------------------------------
+                                                    robot_heading,linear_speed_left, 
+                                                    linear_speed_right, wheel_separation, 
+                                                    delta_t)
 
         # Update robot state
         robot_x_position = x
