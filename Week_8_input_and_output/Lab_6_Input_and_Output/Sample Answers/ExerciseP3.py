@@ -1,12 +1,22 @@
+# robot simulation
+
+'''
+## Task
+
+Write a program that generates a robot log file. 
+
+Each time the program saves a snapshot of the robot, it should also record the following information and save it to log file:
+- timestamp 
+- position of the robot
+- orientation of the robot
+- the state information: "Collision detected" if the robot has collided with a wall or obstacle
+'''
+
+# import modules
 from robot_plotter import init_plot, snapshot, show_plot
 from math import sin, cos, atan2, sqrt, pi
 from random import random
-
-# Navigation mode: 'random_walk_mode' or 'goal_seek_mode'
-mode = 'random_walk_mode' # 'goal_seek_mode'
-
-# Obstacle avoidance
-avoid_obstacles = True
+from time import perf_counter
 
 # constants about the robot
 robot_name = "Daneel"
@@ -14,7 +24,7 @@ robot_radius = 160
 wheel_separation = 150
 robot_wheel_radius = 35
 
-#Map information
+# Map information
 map_x_min = 0
 map_x_max = 5000
 map_y_min  = 0
@@ -27,7 +37,6 @@ map_coords = ((map_x_min, map_x_max), (map_y_min, map_y_max))
 # obstacle_width = 4000
 # obstacle_height = 500
 # obstacle = ((obstacle_x, obstacle_y), (obstacle_width, obstacle_height))
-# goal = (1000, 4000)
 
 # Obstacles described using the format ((x, y), (width, height))
 obstacles = [((100, 2250), (4000, 500)),
@@ -78,7 +87,7 @@ def random_walk():
     return linear_speed_left, linear_speed_right
 
 def goal_seek(iteration, phi_robot, distance_robot, 
-              delta_t, wheel_seperation, num_steps):
+              delta_t, wheel_separation, num_steps):
      # Turn to face heading
     if iteration == 0:
 
@@ -125,19 +134,16 @@ def main():
 
     for ii in range(num_steps):
 
-        if mode == 'goal_seek_mode':
-            linear_speed_left, linear_speed_right = goal_seek(ii, phi_robot, distance_robot, 
-                                                              delta_t, wheel_separation, num_steps)
-            
-        elif mode == 'random_walk_mode':
-            linear_speed_left, linear_speed_right = random_walk()
+        # Random walk with obstacle avoiadance (comment out obstacle avoisance if not needed)
+        linear_speed_left, linear_speed_right = random_walk()
 
         # Compute new position and orientation
         x, y, theta = compute_new_positioning(robot_x_position, robot_y_position, 
-                                            robot_heading, linear_speed_left, 
-                                            linear_speed_right, wheel_separation, 
-                                            delta_t)                   
+                                              robot_heading, linear_speed_left, 
+                                              linear_speed_right, wheel_separation, 
+                                              delta_t)
 
+        # --------------------------------------------------------------
         # OBSTACLE AVOIDANCE 
         obstacle_detected = False
 
@@ -174,7 +180,6 @@ def main():
                                                   robot_heading,linear_speed_left, 
                                                   linear_speed_right, wheel_separation, 
                                                   delta_t)
-        # --------------------------------------------------------------
 
         # Update robot state
         robot_x_position = x
@@ -188,11 +193,11 @@ def main():
 
         # Display current frame 
         show_plot(map_coords, goal=goal, 
-                obstacles=obstacles, pause=0.1)
+                  obstacles=obstacles, pause=0.1)
 
     # Display final frame 
     show_plot(map_coords, goal=goal, 
-            obstacles=obstacles)
+              obstacles=obstacles)
 
 if __name__ == '__main__':
     main()
