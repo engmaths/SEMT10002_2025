@@ -45,12 +45,18 @@ def sinc(angle_change):
 
 def update_pose(robot_x_position, robot_y_position, robot_heading, ang_speed_left, ang_speed_right, robot_wheel_radius, wheel_separation):
 
+    '''
+    Calculate new pose (x, y, heading) of robot given wheel speeds and robot parameters
+    '''
+
+    #Linear speed of each wheel is just angular speed x radius
     linear_speed_left = ang_speed_left * robot_wheel_radius
     linear_speed_right = ang_speed_right * robot_wheel_radius
     # angular speed of the robot is given by the difference in speeds divided by wheel spacing
     ang_speed_robot = (linear_speed_left - linear_speed_right) / wheel_separation
     # multiply angular speed by time to get the amount the angle has changed.
     angle_change = ang_speed_robot * delta_t
+
     ave_speed = 0.5*(linear_speed_left + linear_speed_right)
 
     # sinc
@@ -65,6 +71,8 @@ def update_pose(robot_x_position, robot_y_position, robot_heading, ang_speed_lef
 
 
 def get_distance_to_target(x, y, goal):
+
+    #Euclidean distance between (x, y) and goal
      
     x_distance = goal[0] - x
     y_distance = goal[1] - y
@@ -73,6 +81,8 @@ def get_distance_to_target(x, y, goal):
 
 
 def get_angle_to_target(x, y, goal):
+
+    #Use inverse tangent to get angle towards goal
      
     x_distance = goal[0] - x
     y_distance = goal[1] - y
@@ -82,15 +92,24 @@ def get_angle_to_target(x, y, goal):
 
 def get_wheel_speeds(distance_to_target, heading_error):
 
+    '''
+    Determine appropriate wheel speeds based on current distance to target and heading error
+    '''
+
+
+    #If close to the goal, then stop
     if distance_to_target < 5:
         ang_speed_left = 0
         ang_speed_right = 0
         print("Stopped")
+    #If heading error is large, then just turn on the spot
     elif heading_error > 0.01:
+        #Use heading error as control signal- large error means fast turn, small error means slow turn.
         ang_speed_left = heading_error 
         ang_speed_right = -heading_error
         print("Turning")
     else:
+        #If heading error is small and we're far from the goal, then mostly go forward, but use heading error for small corrections
         ang_speed_left = 1 + heading_error
         ang_speed_right = 1 - heading_error
         print("Moving straight")
@@ -100,8 +119,11 @@ def get_wheel_speeds(distance_to_target, heading_error):
 
 def main(robot_x_position, robot_y_position, robot_heading):
 
+
+    #Initialise plotting
     init_plot(robot_x_position,robot_y_position,robot_heading)
 
+    #Main simulation loop
     for ii in range(num_steps):
             
         distance_to_target = get_distance_to_target(robot_x_position, robot_y_position, goal)
@@ -110,8 +132,10 @@ def main(robot_x_position, robot_y_position, robot_heading):
         print("Distance to target: ", distance_to_target)
         print("Angle to target: ", angle_to_target, ", Heading error: ", heading_error)
 
+        #Determine wheel speeds based on distance and heading to target
         ang_speed_left, ang_speed_right = get_wheel_speeds(distance_to_target, heading_error)
 
+        #Calculate new robot position and heading
         robot_x_position, robot_y_position, robot_heading = update_pose(robot_x_position, robot_y_position, robot_heading, ang_speed_left, ang_speed_right, robot_wheel_radius, wheel_separation)
 
         print("X position: ", robot_x_position, ", Y position:", robot_y_position, ", Heading: ", robot_heading)
