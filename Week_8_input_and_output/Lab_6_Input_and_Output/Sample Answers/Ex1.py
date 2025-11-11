@@ -15,21 +15,22 @@ import csv
 
 with open('rainfall.csv') as file:
 
-    data = csv.reader(file)
+    reader = csv.reader(file)
 
-    data_list = list(data)
+    data = list(reader)
 
-# List to store rainfall values
-monthly_rainfall = []
+rainfall = data[1]
+
+for ii in range(len(rainfall)):
+    rainfall[ii] = float(rainfall[ii])
 
 # Convert string representation of rainfall values to numerical data
-for ii in data_list[1]:
-    monthly_rainfall.append(float(ii))
 
-total_annual_rainfall = sum(monthly_rainfall)
-average_monthly_rainfall = total_annual_rainfall / len(monthly_rainfall)
-maximum_monthly_rainfall = max(monthly_rainfall)
-minimum_monthly_rainfall = min(monthly_rainfall)
+
+total_annual_rainfall = sum(rainfall)
+average_monthly_rainfall = total_annual_rainfall / len(rainfall)
+maximum_monthly_rainfall = max(rainfall)
+minimum_monthly_rainfall = min(rainfall)
 
 print('total annual rainfall:', total_annual_rainfall)
 print('the average monthly rainfall:', average_monthly_rainfall)

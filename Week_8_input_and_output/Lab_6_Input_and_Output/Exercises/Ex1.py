@@ -11,6 +11,21 @@ Exercise 1
 
 '''
 
+import csv
+
+with open('rainfall.csv') as file:
+
+    reader = csv.reader(file)
+
+    data = list(reader)
+
+print(data)
+
+rainfall = data[1]
+
+print(rainfall)
+
+
 total_annual_rainfall = '???'
 average_monthly_rainfall = '???'
 maximum_monthly_rainfall = '???'
