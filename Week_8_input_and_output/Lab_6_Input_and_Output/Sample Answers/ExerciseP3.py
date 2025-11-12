@@ -1,12 +1,35 @@
+# robot simulation
+
+'''
+## Task
+
+Write a program that generates a robot log file. 
+
+Each time the program saves a snapshot of the robot, it should also record the following information and save it to log file:
+- timestamp 
+- position of the robot
+- orientation of the robot
+- the state information: "Collision with wall"/"Collision with obstacle" if the robot has 
+collided with a wall or obstacle respectively, otherwise the state information should be blank (i.e. an empty string) 
+'''
+
 from robot_plotter import init_plot, snapshot, show_plot
 from math import sin, cos, atan2, sqrt, pi
 from random import random
+from time import perf_counter
+import csv
 
 # Navigation mode: 'random_walk_mode' or 'goal_seek_mode'
 mode = 'random_walk_mode' # 'goal_seek_mode'
 
 # Obstacle avoidance
 avoid_obstacles = True
+
+# Simulation start time
+start_time = perf_counter() 
+
+# Robot log file name
+log_file_name = 'log_file.csv'
 
 # constants about the robot
 robot_name = "Daneel"
@@ -21,20 +44,13 @@ map_y_min  = 0
 map_y_max = 5000
 map_coords = ((map_x_min, map_x_max), (map_y_min, map_y_max))
 
-# # An obstacle with bottom left corner at at x = 100, y = 2250, width of 500 and height of 800
-# obstacle_x = 100
-# obstacle_y = 2250
-# obstacle_width = 4000
-# obstacle_height = 500
-# obstacle = ((obstacle_x, obstacle_y), (obstacle_width, obstacle_height))
-# goal = (1000, 4000)
-
 # Obstacles described using the format ((x, y), (width, height))
 obstacles = [((100, 2250), (4000, 500)),
              ((3000, 3000), (800, 1500)),
              ((1500, 500), (600, 600))
             ]
 
+# Goal position for robot
 goal = (1000, 4000)
 
 # This is the number of timesteps we simulate - change as is necessary.
@@ -71,7 +87,7 @@ def random_walk():
     ang_speed_left = 5 * random()
     ang_speed_right = 5 * random()
 
-    # convert angular speeds into linear speeds with linear_velocity = angular_velocity * radius
+    # convert angular speeds into linear speeds
     linear_speed_left = ang_speed_left * robot_wheel_radius
     linear_speed_right = ang_speed_right * robot_wheel_radius
     
@@ -103,7 +119,9 @@ def goal_seek(iteration, phi_robot, distance_robot,
 
 def detect_obstacles (x, y, obstacles):
     # Returns True if obstacle detected, else False 
+
     obstacle_detected = False
+    obstacle_type = None
 
     # Detect obstacles    
     for ii in obstacles:
@@ -116,6 +134,7 @@ def detect_obstacles (x, y, obstacles):
             obstacle_y < y < obstacle_y + obstacle_height):
 
             obstacle_detected = True
+            obstacle_type = 'obstacle'
 
     # Detect edges of map
     if (x > map_x_max or
@@ -124,8 +143,9 @@ def detect_obstacles (x, y, obstacles):
         y < map_y_min):
 
         obstacle_detected = True
+        obstacle_type = 'wall'
 
-    return obstacle_detected   
+    return obstacle_detected, obstacle_type
 
 def avoid_obstacle_maneuver(wheel_separation):
         # Turn 180 degrees on the spot if collision with obstacle is detected 
@@ -136,6 +156,34 @@ def avoid_obstacle_maneuver(wheel_separation):
         linear_speed_right = linear_displacement_right / delta_t 
 
         return linear_speed_left, linear_speed_right
+
+def update_log_file(position, orientation, state):
+
+    # Time stamp
+    time_now = perf_counter()
+    time_stamp = round((time_now - start_time), 3)
+
+    # State
+    if state==None:
+        state = ''
+    else:
+        state = 'Collision with ' + state
+
+    # Position
+    for ii in range(len(position)):
+        position[ii] = round(position[ii], 3)
+
+    # Orientation
+    orientation = round(orientation, 3)
+
+    row = [time_stamp, position, orientation, state]
+    
+    # Open the CSV file in append mode
+    with open(log_file_name, 'a', newline='') as file:
+        writer = csv.writer(file)
+
+        # Append a single row
+        writer.writerow(row)  
 
 
 def main():
@@ -149,6 +197,13 @@ def main():
     init_plot(robot_x_position, 
               robot_y_position, 
               robot_heading)
+    
+    # Initialise log file
+    with open(log_file_name, 'w', newline='') as file:
+        writer = csv.writer(file)
+        # Add column headings
+        writer.writerow(['Time (s)','Position [x,y]',
+                         'Orientation (rads)','State information']) 
 
     # Compute angle to turn to face goal
     phi_robot = atan2(goal[0]-robot_x_position, 
@@ -176,7 +231,7 @@ def main():
                                               delta_t)                   
 
         # OBSTACLE AVOIDANCE 
-        obstacle_detected = detect_obstacles(x, y, obstacles)
+        obstacle_detected, obstacle_type = detect_obstacles(x, y, obstacles)
 
         if obstacle_detected:
 
@@ -197,6 +252,11 @@ def main():
         snapshot(robot_x_position, 
                 robot_y_position, 
                 robot_heading)
+        
+        # Update log file
+        update_log_file([robot_x_position, robot_y_position], 
+                        robot_heading, 
+                        obstacle_type)
 
         # Display current frame 
         show_plot(map_coords, goal=goal, 
