@@ -3,19 +3,22 @@
 Exercise 5
 ================
 
-Planet  Diameter (km)   Mass    Rotation period 
-Mercury 4,878           0.06    58.65 (d) 
-Venus   12,100          0.82    243 (d)  
-Earth   12,756          1.00    23.934 (h)  
-Mars    6,794           0.11    24.623 (h)  
-Jupiter 142,800         317.89  9.842  (h)  
-Saturn  120,000         95.17   10.233 (h)  
-Uranus  52,400          14.56   16 (h) 
-Neptune 48,400          17.24   18 (h)   
+Your robotics team is developing a simple data management system to keep track of a fleet of *mobile* robots working in a warehouse.
 
-1. Write a program that identifies and prints the name of the planet with the lowest density.
-  Assume each planet is a perfect sphere
+Each robot has:
+- a unique ID
+- a position in 2D space (x, y)
+- a battery level (%)
+- a status (e.g. "idle", "moving", "charging")
+- a set of task statistics (e.g. number of deliveries completed)
 
-2. Write a program that identifies and outputs the names and rotation periods of planets
- with a rotation period shorter than Earth's.
+Import the file robot_fleet_data.csv and design a data structure using tuples and dictionaries to represent this information.
+- Which parts should be immutable (tuples)?
+- Which parts should be mutable (dictionaries)?
+
+Your program should:
+- Print the current position of robot R002.
+- Update R002’s status to "charging".
+- Increase R003’s delivery count by 1.
+- Add a new robot, R004 at position (7.5, 2.0) with 100% battery and status "idle".
 '''
