@@ -34,6 +34,7 @@ robot_name = "Daneel"
 robot_radius = 160
 wheel_separation = 150
 wheel_radius = 35
+sensor_range = 300
 
 # Map information
 map_x_min = 0
@@ -165,8 +166,130 @@ def goal_seek(step, angle_change, distance_robot,
 
     return linear_speed_left, linear_speed_right
 
+def compute_orientation(a, b, c):
+    """
+    Returns orientation of the path between three ordered points (a, b, c).
+    0 -> collinear, 1 -> clockwise, -1 -> counterclockwise
+    """
+
+    val = (b[1] - a[1]) * (c[0] - b[0]) - (b[0] - a[0]) * (c[1] - b[1])
+
+    if val == 0:
+        return 0
+    elif val < 0:
+        return -1
+    else:
+        return 1
+
+def detect_collinear_overlap(a, b, c):
+    """
+    Checks if point c lies on segment ab
+
+    Parameters
+    ----------
+    a, b, c : three collinear points
+
+    Returns 
+    ----------
+    True if point c lies on segment ab, otherwise False
+    """    
+    return (min(a[0], b[0]) <= c[0] <= max(a[0], b[0]) and
+            min(a[1], b[1]) <= c[1] <= max(a[1], b[1]))
+
+def detect_line_intersection(p1, p2, q1, q2):
+    """
+    Returns True if line segments p1p2 and q1q2 intersect, otherwise False
+    """
+    o1 = compute_orientation(p1, p2, q1)
+    o2 = compute_orientation(p1, p2, q2)
+    o3 = compute_orientation(q1, q2, p1)
+    o4 = compute_orientation(q1, q2, p2)
+
+    print(o1, o2, o3, o4)
+
+    # Test if lines intersect
+    if o1 != o2 and o3 != o4:
+        return True
+
+    # Test collinear lines overlap
+    elif o3 == 0 and detect_collinear_overlap(q1, q2, p1):
+        return True
+    
+    elif o4 == 0 and detect_collinear_overlap(q1, q2, p2):
+        return True
+    
+    # Lines do not intersect
+    else:
+        return False
+
+# def detect_obstacles(robot_x_position, 
+#                      robot_y_position, 
+#                      obstacles):
+    
+#     """
+#     Detects if the robot has collided with a wall or obstacle
+
+#     Parameters
+#     ----------
+#     robot_x_position : x coordinate
+#     robot_y_position : y coordinate
+#     obstacles : list of positions and dimensions of obstacles 
+
+#     Returns
+#     -------
+#     obstacle_detected : True if obstacle detected, else False
+#     obstacle_type : 'obstacle' or 'wall'
+#     """
+
+#     # Initailise variables
+#     obstacle_detected = False
+#     obstacle_type = None
+
+#     # Detect obstacles    
+#     for ii in obstacles:
+#         obstacle_x = ii[0][0]
+#         obstacle_y = ii[0][1]
+#         obstacle_width = ii[1][0]
+#         obstacle_height = ii[1][1]
+
+#         if (obstacle_x < robot_x_position < obstacle_x + obstacle_width and 
+#             obstacle_y < robot_y_position < obstacle_y + obstacle_height):
+
+#             obstacle_detected = True
+#             obstacle_type = 'obstacle'
+
+#     # Detect edges of map
+#     if (robot_x_position > map_x_max or
+#         robot_x_position < map_x_min or
+#         robot_y_position > map_y_max or
+#         robot_y_position < map_y_min):
+
+#         obstacle_detected = True
+#         obstacle_type = 'wall'
+
+#     return obstacle_detected, obstacle_type
+
+def generate_sensor_points(robot_x_position, 
+                            robot_y_position, 
+                            robot_heading,
+                            sensor_range):
+    """
+    Returns the start end end point of the line representing the 
+    robot sensor range  
+    """
+
+    sensor_start = (robot_x_position, robot_y_position)
+    sensor_end = (robot_x_position + sensor_range * sin(robot_heading),
+                     robot_y_position + sensor_range * cos(robot_heading))
+    
+    return sensor_start, sensor_end
+    
+
+
 def detect_obstacles(robot_x_position, 
                       robot_y_position, 
+                      robot_heading,
+                      sensor_range,
                       obstacles):
     
     """
@@ -188,6 +311,12 @@ def detect_obstacles(robot_x_position,
     obstacle_detected = False
     obstacle_type = None
 
+    # Line section representing sensor range
+    sensor_start, sensor_end = generate_sensor_points(robot_x_position, 
+                                                      robot_y_position, 
+                                                      robot_heading,
+                                                      sensor_range)
+
     # Detect obstacles    
     for ii in obstacles:
         obstacle_x = ii[0][0]
@@ -195,22 +324,37 @@ def detect_obstacles(robot_x_position,
         obstacle_width = ii[1][0]
         obstacle_height = ii[1][1]
 
-        if (obstacle_x < robot_x_position < obstacle_x + obstacle_width and 
-            obstacle_y < robot_y_position < obstacle_y + obstacle_height):
+        obstacle_start = (obstacle_x, obstacle_y)
+        obstacle_end = (obstacle_x + obstacle_width, obstacle_y + obstacle_height)
 
+        if detect_line_intersection(sensor_start, 
+                                    sensor_end, 
+                                    obstacle_start, 
+                                    obstacle_end):
+            # print('obstacle!')
             obstacle_detected = True
             obstacle_type = 'obstacle'
 
     # Detect edges of map
-    if (robot_x_position > map_x_max or
-        robot_x_position < map_x_min or
-        robot_y_position > map_y_max or
-        robot_y_position < map_y_min):
+    map_edges = [[(map_x_min, map_y_min), (map_x_min, map_y_max)], 
+                 [(map_x_min, map_y_min), (map_x_max, map_y_min)],
+                 [(map_x_min, map_y_max), (map_x_max, map_y_max)],
+                 [(map_x_max, map_y_min), (map_x_max, map_y_max)]]
+    
+    for ii in map_edges:
+        obstacle_start = ii[0]
+        obstacle_end = ii[1]
 
-        obstacle_detected = True
-        obstacle_type = 'wall'
+        if detect_line_intersection(sensor_start, 
+                                    sensor_end, 
+                                    obstacle_start, 
+                                    obstacle_end):
+            # print('wall!')
+            obstacle_detected = True
+            obstacle_type = 'wall'
 
     return obstacle_detected, obstacle_type
+
 
 def avoid_obstacle_maneuver(wheel_separation):
         
@@ -254,6 +398,11 @@ def update_log_file(position, heading, obstacle_type):
 
         # Append a single row
         writer.writerow(row)  
+
+def sensors(robot_x_position, robot_y_position, robot_heading):
+    pass
+
+
 
 
 def main():
@@ -309,10 +458,18 @@ def main():
                                                                                                 wheel_separation, 
                                                                                                 delta_t)                   
 
+        
+        
+        
         # OBSTACLE AVOIDANCE 
         if avoid_obstacles:
+            # obstacle_detected, obstacle_type = detect_obstacles(robot_x_position_new, 
+            #                                                     robot_y_position_new, 
+            #                                                     obstacles)
             obstacle_detected, obstacle_type = detect_obstacles(robot_x_position_new, 
                                                                 robot_y_position_new, 
+                                                                robot_heading,
+                                                                sensor_range,
                                                                 obstacles)
 
             if obstacle_detected:
@@ -340,12 +497,19 @@ def main():
         snapshot(robot_x_position, robot_y_position, robot_heading)
         
         # Update log file
-        update_log_file([robot_x_position, 
-                         robot_y_position], 
+        update_log_file([robot_x_position, robot_y_position], 
                         robot_heading, 
                         obstacle_type)
+        
+
+        # Get points defining sensor range for plotting
+        sensor_start, sensor_end = generate_sensor_points(robot_x_position, 
+                                    robot_y_position, 
+                                    robot_heading,
+                                    sensor_range)
 
         # Display current frame 
+        # show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1, sensors=[(sensor_start, sensor_end)])
         show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1)
 
     # Display final frame 
