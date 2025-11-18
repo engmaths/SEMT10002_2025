@@ -88,6 +88,10 @@ def parse_command_line_arguments(argv):
 				show_mode - a boolean flag that determines whether we print the mode or not.
 	'''
 
+	if len(argv) < 2:
+		print("Error: expected at least one argument")
+		exit()
+
 	N_flags = 0
 	show_mode = False
 	show_median = False
