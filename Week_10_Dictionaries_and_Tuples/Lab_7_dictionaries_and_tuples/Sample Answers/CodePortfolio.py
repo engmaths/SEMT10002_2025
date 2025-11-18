@@ -399,12 +399,6 @@ def update_log_file(position, heading, obstacle_type):
         # Append a single row
         writer.writerow(row)  
 
-def sensors(robot_x_position, robot_y_position, robot_heading):
-    pass
-
-
-
-
 def main():
 
     # Initial robot configuration
