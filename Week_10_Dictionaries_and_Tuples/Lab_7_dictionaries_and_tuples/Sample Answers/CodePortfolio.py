@@ -282,13 +282,87 @@ def generate_sensor_points(robot_x_position,
     sensor_end = (robot_x_position + sensor_range * sin(robot_heading),
                      robot_y_position + sensor_range * cos(robot_heading))
     
-    return sensor_start, sensor_end
+    return (sensor_start, sensor_end)
+
+def compute_sensor_angles(robot_heading):
+    """
+    Retuns the angles 
+    """
     
 
 
+# def detect_obstacles(robot_x_position, 
+#                       robot_y_position, 
+#                       robot_heading,
+#                       sensor_range,
+#                       obstacles):
+    
+#     """
+#     Detects if the robot has collided with a wall or obstacle
+
+#     Parameters
+#     ----------
+#     robot_x_position : x coordinate
+#     robot_y_position : y coordinate
+#     obstacles : list of positions and dimensions of obstacles 
+
+#     Returns
+#     -------
+#     obstacle_detected : True if obstacle detected, else False
+#     obstacle_type : 'obstacle' or 'wall'
+#     """
+
+#     # Initailise variables
+#     obstacle_detected = False
+#     obstacle_type = None
+
+#     # Line section representing sensor range
+#     sensor_start, sensor_end = generate_sensor_points(robot_x_position, 
+#                                                       robot_y_position, 
+#                                                       robot_heading,
+#                                                       sensor_range)
+
+#     # Detect obstacles    
+#     for ii in obstacles:
+#         obstacle_x = ii[0][0]
+#         obstacle_y = ii[0][1]
+#         obstacle_width = ii[1][0]
+#         obstacle_height = ii[1][1]
+
+#         obstacle_start = (obstacle_x, obstacle_y)
+#         obstacle_end = (obstacle_x + obstacle_width, obstacle_y + obstacle_height)
+
+#         if detect_line_intersection(sensor_start, 
+#                                     sensor_end, 
+#                                     obstacle_start, 
+#                                     obstacle_end):
+#             # print('obstacle!')
+#             obstacle_detected = True
+#             obstacle_type = 'obstacle'
+
+#     # Detect edges of map
+#     map_edges = [[(map_x_min, map_y_min), (map_x_min, map_y_max)], 
+#                  [(map_x_min, map_y_min), (map_x_max, map_y_min)],
+#                  [(map_x_min, map_y_max), (map_x_max, map_y_max)],
+#                  [(map_x_max, map_y_min), (map_x_max, map_y_max)]]
+    
+#     for ii in map_edges:
+#         obstacle_start = ii[0]
+#         obstacle_end = ii[1]
+
+#         if detect_line_intersection(sensor_start, 
+#                                     sensor_end, 
+#                                     obstacle_start, 
+#                                     obstacle_end):
+#             # print('wall!')
+#             obstacle_detected = True
+#             obstacle_type = 'wall'
+
+#     return obstacle_detected, obstacle_type
+
 def detect_obstacles(robot_x_position, 
                       robot_y_position, 
-                      robot_heading,
+                      sensor_angles,
                       sensor_range,
                       obstacles):
     
@@ -311,47 +385,49 @@ def detect_obstacles(robot_x_position,
     obstacle_detected = False
     obstacle_type = None
 
-    # Line section representing sensor range
-    sensor_start, sensor_end = generate_sensor_points(robot_x_position, 
-                                                      robot_y_position, 
-                                                      robot_heading,
-                                                      sensor_range)
+    for angle in sensor_angles:
 
-    # Detect obstacles    
-    for ii in obstacles:
-        obstacle_x = ii[0][0]
-        obstacle_y = ii[0][1]
-        obstacle_width = ii[1][0]
-        obstacle_height = ii[1][1]
+        # Line section representing sensor range
+        sensor_start, sensor_end = generate_sensor_points(robot_x_position, 
+                                                        robot_y_position, 
+                                                        angle,
+                                                        sensor_range)
 
-        obstacle_start = (obstacle_x, obstacle_y)
-        obstacle_end = (obstacle_x + obstacle_width, obstacle_y + obstacle_height)
+        # Detect obstacles    
+        for ii in obstacles:
+            obstacle_x = ii[0][0]
+            obstacle_y = ii[0][1]
+            obstacle_width = ii[1][0]
+            obstacle_height = ii[1][1]
 
-        if detect_line_intersection(sensor_start, 
-                                    sensor_end, 
-                                    obstacle_start, 
-                                    obstacle_end):
-            # print('obstacle!')
-            obstacle_detected = True
-            obstacle_type = 'obstacle'
+            obstacle_start = (obstacle_x, obstacle_y)
+            obstacle_end = (obstacle_x + obstacle_width, obstacle_y + obstacle_height)
 
-    # Detect edges of map
-    map_edges = [[(map_x_min, map_y_min), (map_x_min, map_y_max)], 
-                 [(map_x_min, map_y_min), (map_x_max, map_y_min)],
-                 [(map_x_min, map_y_max), (map_x_max, map_y_max)],
-                 [(map_x_max, map_y_min), (map_x_max, map_y_max)]]
-    
-    for ii in map_edges:
-        obstacle_start = ii[0]
-        obstacle_end = ii[1]
+            if detect_line_intersection(sensor_start, 
+                                        sensor_end, 
+                                        obstacle_start, 
+                                        obstacle_end):
+                # print('obstacle!')
+                obstacle_detected = True
+                obstacle_type = 'obstacle'
 
-        if detect_line_intersection(sensor_start, 
-                                    sensor_end, 
-                                    obstacle_start, 
-                                    obstacle_end):
-            # print('wall!')
-            obstacle_detected = True
-            obstacle_type = 'wall'
+        # Detect edges of map
+        map_edges = [[(map_x_min, map_y_min), (map_x_min, map_y_max)], 
+                    [(map_x_min, map_y_min), (map_x_max, map_y_min)],
+                    [(map_x_min, map_y_max), (map_x_max, map_y_max)],
+                    [(map_x_max, map_y_min), (map_x_max, map_y_max)]]
+        
+        for ii in map_edges:
+            obstacle_start = ii[0]
+            obstacle_end = ii[1]
+
+            if detect_line_intersection(sensor_start, 
+                                        sensor_end, 
+                                        obstacle_start, 
+                                        obstacle_end):
+                # print('wall!')
+                obstacle_detected = True
+                obstacle_type = 'wall'
 
     return obstacle_detected, obstacle_type
 
@@ -462,7 +538,7 @@ def main():
             #                                                     obstacles)
             obstacle_detected, obstacle_type = detect_obstacles(robot_x_position_new, 
                                                                 robot_y_position_new, 
-                                                                robot_heading,
+                                                                [(robot_heading - pi/4), robot_heading, (robot_heading + pi/4)],
                                                                 sensor_range,
                                                                 obstacles)
 
@@ -497,17 +573,29 @@ def main():
         
 
         # Get points defining sensor range for plotting
-        sensor_start, sensor_end = generate_sensor_points(robot_x_position, 
+        sensors = []
+        for angle in [(robot_heading - pi/4), robot_heading, (robot_heading + pi/4)]:
+            sensors.append(generate_sensor_points(robot_x_position, 
                                     robot_y_position, 
-                                    robot_heading,
-                                    sensor_range)
+                                    angle,
+                                    sensor_range))
+        
+
+
+        # sensor_start, sensor_end = generate_sensor_points(robot_x_position, 
+        #                             robot_y_position, 
+        #                             robot_heading,
+        #                             sensor_range)
 
         # Display current frame 
+        show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1, sensors=sensors)
         # show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1, sensors=[(sensor_start, sensor_end)])
-        show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1)
+        # show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1)
 
     # Display final frame 
-    show_plot(map_coords, goal=goal, obstacles=obstacles)
+    show_plot(map_coords, goal=goal, obstacles=obstacles, sensors=sensors)
+    # show_plot(map_coords, goal=goal, obstacles=obstacles, sensors=[(sensor_start, sensor_end)])
+    # show_plot(map_coords, goal=goal, obstacles=obstacles)
 
 if __name__ == '__main__':
     main()
