@@ -34,7 +34,7 @@ robot_name = "Daneel"
 robot_radius = 160
 wheel_separation = 150
 wheel_radius = 35
-sensor_range = 300
+sensor_range = 50
 
 # Map information
 map_x_min = 0
@@ -45,7 +45,7 @@ map_coords = ((map_x_min, map_x_max),
               (map_y_min, map_y_max))
 
 # Obstacles described using the format ((x, y), (width, height))
-obstacles = [((100, 2250), (4000, 500)),
+obstacles = [((100, 1250), (4000, 500)),
              ((3000, 3000), (800, 1500)),
              ((1500, 500), (600, 600))
             ]
@@ -592,12 +592,14 @@ def main():
         #                             sensor_range)
 
         # Display current frame 
-        show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1, sensors=sensors)
+        show_plot(map_coords, goal=goal, obstacles=obstacles)
+        # show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1, sensors=sensors)
         # show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1, sensors=[(sensor_start, sensor_end)])
         # show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1)
 
     # Display final frame 
-    show_plot(map_coords, goal=goal, obstacles=obstacles, sensors=sensors)
+    show_plot(map_coords, goal=goal, obstacles=obstacles)
+    # show_plot(map_coords, goal=goal, obstacles=obstacles, sensors=sensors)
     # show_plot(map_coords, goal=goal, obstacles=obstacles, sensors=[(sensor_start, sensor_end)])
     # show_plot(map_coords, goal=goal, obstacles=obstacles)
 
