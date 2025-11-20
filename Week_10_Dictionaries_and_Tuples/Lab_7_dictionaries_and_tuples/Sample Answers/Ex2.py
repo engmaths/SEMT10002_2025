@@ -25,3 +25,16 @@ inventory = {
               "product info": ("1278274389030", "Wonderfarm")},
 }
 
+# Add a new product entry using the same structure.
+inventory["yoghurt"] = {"price": 2.30, 
+                        "stock": 60, 
+                        "product info": ("768504665342", "Yum Dairy")}
+
+print(inventory)
+
+# Update the stock of apples after selling 5 units.
+inventory["apple"]["stock"] = inventory["apple"]["stock"]-5
+print(inventory)
+
+# Print the barcode number for bread.
+print('Barcode for bread:', inventory["bread"]["product info"][0])

@@ -16,3 +16,15 @@ exchange_rates = {
     ("EUR", "GBP"): 0.86,
     ("USD", "JPY"): 151.7
 }
+
+# Update the current rate for USD to EUR
+exchange_rates[("USD", "EUR")] = 0.95
+
+# Add a new rate for JPY to EUR
+exchange_rates[("JPY", "EUR")] = 0.0062
+
+print("Updated exchange rates:")
+print(exchange_rates)
+
+# Try using a list as a dictionary key
+exchange_rates[["USD", "CAD"]] = 1.36
