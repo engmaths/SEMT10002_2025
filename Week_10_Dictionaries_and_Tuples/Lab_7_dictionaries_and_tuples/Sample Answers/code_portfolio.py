@@ -1,16 +1,3 @@
-'''
-## Task
-
-Write a program that generates a robot log file. 
-
-Each time the program saves a snapshot of the robot, it should also record the following information and save it to log file:
-- timestamp 
-- position of the robot
-- orientation of the robot
-- the state information: "Collision with wall"/"Collision with obstacle" if the robot has collided with a wall or obstacle respectively, 
-otherwise the state information should be blank (i.e. an empty string) 
-'''
-
 from robot_plotter import init_plot, snapshot, show_plot
 from math import sin, cos, atan2, sqrt, pi
 from random import random
