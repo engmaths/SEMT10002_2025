@@ -481,6 +481,7 @@ def main():
     robot_x_position = 500
     robot_y_position = 500
     robot_heading = 0
+    sensor_angles = [(robot_heading - pi/4), robot_heading, (robot_heading + pi/4)]
 
     # Initialise visualisation
     init_plot(robot_x_position, 
@@ -538,7 +539,8 @@ def main():
             #                                                     obstacles)
             obstacle_detected, obstacle_type = detect_obstacles(robot_x_position_new, 
                                                                 robot_y_position_new, 
-                                                                [(robot_heading - pi/4), robot_heading, (robot_heading + pi/4)],
+                                                                # [(robot_heading - pi/4), robot_heading, (robot_heading + pi/4)],
+                                                                sensor_angles,
                                                                 sensor_range,
                                                                 obstacles)
 
@@ -562,6 +564,7 @@ def main():
         robot_x_position = robot_x_position_new
         robot_y_position = robot_y_position_new
         robot_heading = robot_heading_new
+        sensor_angles = [(robot_heading - pi/4), robot_heading, (robot_heading + pi/4)]
 
         # Plot robot at current state
         snapshot(robot_x_position, robot_y_position, robot_heading)
@@ -574,7 +577,8 @@ def main():
 
         # Get points defining sensor range for plotting
         sensors = []
-        for angle in [(robot_heading - pi/4), robot_heading, (robot_heading + pi/4)]:
+        # for angle in [(robot_heading - pi/4), robot_heading, (robot_heading + pi/4)]:
+        for angle in sensor_angles:
             sensors.append(generate_sensor_points(robot_x_position, 
                                     robot_y_position, 
                                     angle,
