@@ -7,7 +7,8 @@ Each time the program saves a snapshot of the robot, it should also record the f
 - timestamp 
 - position of the robot
 - orientation of the robot
-- the state information: "Collision with wall"/"Collision with obstacle" if the robot has collided with a wall or obstacle respectively, 
+- the state information: "Collision with wall"/"Collision with obstacle" if the robot has collided 
+with a wall or obstacle respectively, 
 otherwise the state information should be blank (i.e. an empty string) 
 '''
 
@@ -66,17 +67,17 @@ def compute_new_position(robot_x_position, robot_y_position, robot_heading,
 
     Parameters
     ----------
-    robot_x_position : previous x coordinate
-    robot_y_position : previous y coordinate
-    robot_heading : previous heading
-    linear_speed_left : left wheel linear speed 
-    linear_speed_right : right wheel linear speed
-    wheeel_separation : distance between left and right wheel
-    delta_t : period that the robot moves for in seconds
+    robot_x_position (int or float): previous x coordinate
+    robot_y_position (int or float): previous y coordinate
+    robot_heading (int or float): previous heading
+    linear_speed_left (int or float): left wheel linear speed 
+    linear_speed_right (int or float): right wheel linear speed
+    wheeel_separation (int or float): distance between left and right wheel
+    delta_t (int or float): period that the robot moves for in seconds
 
     Returns
     -------
-    x, y, theta : The new position and heading
+    x, y, theta (ints or floats): The new position and heading
     """
 
     # Compute angular speed of the robot
@@ -130,7 +131,7 @@ def goal_seek(step, angle_change, distance_robot,
 
     Parameters
     ----------
-    step : Current step in simulation
+    step (int): Current step in simulation
     angle_change : Angle to move through to point robot heading towards goal
     distance_robot : Distance from robot original position to goal
     delta_t : Period that the robot moves for in seconds
