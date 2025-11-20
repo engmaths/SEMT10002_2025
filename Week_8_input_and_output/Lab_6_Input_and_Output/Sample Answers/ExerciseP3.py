@@ -166,9 +166,13 @@ def goal_seek(step, angle_change, distance_robot,
 
     return linear_speed_left, linear_speed_right
 
-def detect_obstacles(robot_x_position, 
-                      robot_y_position, 
-                      obstacles):
+def detect_obstacles(   robot_x_position, 
+                        robot_y_position, 
+                        obstacles,
+                        map_x_min=map_x_min,
+                        map_x_max=map_x_max,
+                        map_y_min=map_y_min,
+                        map_y_max=map_y_max):
     
     """
     Detects if the robot has collided with a wall or obstacle
@@ -179,6 +183,10 @@ def detect_obstacles(robot_x_position,
     robot_y_position (int or float): y coordinate of robot
     obstacles (list of tuples): List of obstacle positions and dimensions.
                                 Each obstacle is represented as ((position_x, position_y)
+    map_x_min (int or float) : Minimum x coordinate of rectangular boundary
+    map_x_max (int or float) : Maximum x coordinate of rectangular boundary
+    map_y_min (int or float) : Minimum y coordinate of rectangular boundary
+    map_y_max (int or float) : Maximum y coordinate of rectangular boundary
 
     Returns
     -------

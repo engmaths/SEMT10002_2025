@@ -34,7 +34,7 @@ robot_name = "Daneel"
 robot_radius = 160
 wheel_separation = 150
 wheel_radius = 35
-sensor_range = 50
+sensor_range = 300
 
 # Map information
 map_x_min = 0
@@ -45,7 +45,7 @@ map_coords = ((map_x_min, map_x_max),
               (map_y_min, map_y_max))
 
 # Obstacles described using the format ((x, y), (width, height))
-obstacles = [((100, 1250), (4000, 500)),
+obstacles = [((100, 2250), (4000, 500)),
              ((3000, 3000), (800, 1500)),
              ((1500, 500), (600, 600))
             ]
@@ -361,11 +361,15 @@ def compute_sensor_angles(robot_heading):
 
 #     return obstacle_detected, obstacle_type
 
-def detect_obstacles(robot_x_position, 
-                      robot_y_position, 
-                      sensor_angles,
-                      sensor_range,
-                      obstacles):
+def detect_obstacles(   robot_x_position, 
+                        robot_y_position, 
+                        sensor_angles,
+                        sensor_range,
+                        obstacles,
+                        map_x_min=map_x_min,
+                        map_x_max=map_x_max,
+                        map_y_min=map_y_min,
+                        map_y_max=map_y_max):
     
     """
     Determines whether the robot has collided with a wall or obstacle by checking 
@@ -380,6 +384,10 @@ def detect_obstacles(robot_x_position,
     sensor_range(int or float): The range within which obstacles can be detected by each sensor
     obstacles (list of tuples): List of obstacle positions and dimensions.
                                 Each obstacle is represented as ((position_x, position_y)
+    map_x_min (int or float) : Minimum x coordinate of rectangular boundary
+    map_x_max (int or float) : Maximum x coordinate of rectangular boundary
+    map_y_min (int or float) : Minimum y coordinate of rectangular boundary
+    map_y_max (int or float) : Maximum y coordinate of rectangular boundary
 
     Returns
     -------
@@ -617,14 +625,14 @@ def main():
         #                             sensor_range)
 
         # Display current frame 
-        show_plot(map_coords, goal=goal, obstacles=obstacles)
-        # show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1, sensors=sensors)
+        # show_plot(map_coords, goal=goal, obstacles=obstacles)
+        show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1, sensors=sensors)
         # show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1, sensors=[(sensor_start, sensor_end)])
         # show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1)
 
     # Display final frame 
-    show_plot(map_coords, goal=goal, obstacles=obstacles)
-    # show_plot(map_coords, goal=goal, obstacles=obstacles, sensors=sensors)
+    # show_plot(map_coords, goal=goal, obstacles=obstacles)
+    show_plot(map_coords, goal=goal, obstacles=obstacles, sensors=sensors)
     # show_plot(map_coords, goal=goal, obstacles=obstacles, sensors=[(sensor_start, sensor_end)])
     # show_plot(map_coords, goal=goal, obstacles=obstacles)
 
