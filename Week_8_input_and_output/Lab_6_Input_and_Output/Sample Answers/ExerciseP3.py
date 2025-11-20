@@ -44,7 +44,7 @@ map_y_max = 5000
 map_coords = ((map_x_min, map_x_max), 
               (map_y_min, map_y_max))
 
-# Obstacles described using the format ((x, y), (width, height))
+# Obstacles described using the format ((position_x, position_y), (width, height))
 obstacles = [((100, 2250), (4000, 500)),
              ((3000, 3000), (800, 1500)),
              ((1500, 500), (600, 600))
@@ -67,12 +67,12 @@ def compute_new_position(robot_x_position, robot_y_position, robot_heading,
 
     Parameters
     ----------
-    robot_x_position (int or float): previous x coordinate
-    robot_y_position (int or float): previous y coordinate
+    robot_x_position (int or float): previous x coordinate of robot
+    robot_y_position (int or float): previous y coordinate of robot
     robot_heading (int or float): previous heading
     linear_speed_left (int or float): left wheel linear speed 
     linear_speed_right (int or float): right wheel linear speed
-    wheeel_separation (int or float): distance between left and right wheel
+    wheel_separation (int or float): distance between left and right wheel
     delta_t (int or float): period that the robot moves for in seconds
 
     Returns
@@ -132,16 +132,16 @@ def goal_seek(step, angle_change, distance_robot,
     Parameters
     ----------
     step (int): Current step in simulation
-    angle_change : Angle to move through to point robot heading towards goal
-    distance_robot : Distance from robot original position to goal
-    delta_t : Period that the robot moves for in seconds
-    wheel_separation : Distance between left and right wheel
-    num_steps : Total number of steps in simulation
-    delta_t : Period that the robot moves for in seconds
+    angle_change (int or float): Angle to move through to point robot heading towards goal
+    distance_robot (int or float): Distance from robot original position to goal
+    delta_t (int or float): Period that the robot moves for in seconds
+    wheel_separation (int or float): Distance between left and right wheel
+    num_steps (int): Total number of steps in simulation
+    delta_t (int or float): Period that the robot moves for in seconds
 
     Returns
     -------
-    linear_speed_left, linear_speed_right : The left and right wheel 
+    linear_speed_left, linear_speed_right (ints or floats): The left and right wheel 
     speed for the current step in the simulation
     """
     # Turn to face heading
@@ -175,14 +175,15 @@ def detect_obstacles(robot_x_position,
 
     Parameters
     ----------
-    robot_x_position : x coordinate
-    robot_y_position : y coordinate
-    obstacles : list of positions and dimensions of obstacles 
+    robot_x_position (int or float): x coordinate of robot
+    robot_y_position (int or float): y coordinate of robot
+    obstacles (list of tuples): List of obstacle positions and dimensions.
+                                Each obstacle is represented as ((position_x, position_y)
 
     Returns
     -------
-    obstacle_detected : True if obstacle detected, else False
-    obstacle_type : 'obstacle' or 'wall'
+    obstacle_detected (Boolean): True if obstacle detected, else False
+    obstacle_type (str): 'obstacle' or 'wall'
     """
 
     # Initailise variables
@@ -227,7 +228,23 @@ def avoid_obstacle_maneuver(wheel_separation):
 
     return linear_speed_left, linear_speed_right
 
-def update_log_file(position, heading, obstacle_type):
+def update_log_file(robot_x_position, 
+                    robot_y_position,
+                    robot_heading, 
+                    obstacle_type):
+
+    """
+    Appends a new entry to the robot's log file, recording the timestamp,
+    position, heading, and any detected obstacle or wall collision.
+
+    Parameters
+    ----------
+    robot_x_position (int or float) : x coordinate of robot
+    robot_y_position (int or float) : y coordinate of robot
+    robot heading (int or float) : The robot's heading in radians 
+    obstacles (list of tuples): List of obstacle positions and dimensions.
+                                Each obstacle is represented as ((position_x, position_y)
+    """
 
     # Generate time stamp
     time_now = perf_counter()
@@ -239,15 +256,16 @@ def update_log_file(position, heading, obstacle_type):
     else:
         state = 'Collision with ' + obstacle_type
 
-    # Generate position information 
-    for ii in range(len(position)):
-        position[ii] = round(position[ii], 3)
+    # Generate position information
+    robot_position = [robot_x_position, robot_y_position] 
+    for ii in range(len(robot_position)):
+        robot_position[ii] = round(robot_position[ii], 3)
 
     # Generate heading information 
-    heading = round(heading, 3)
+    robot_heading = round(robot_heading, 3)
 
     # Generate row to write to log file
-    row = [time_stamp, position, heading, state]
+    row = [time_stamp, robot_position, robot_heading, state]
     
     # Open the CSV file in append mode
     with open(log_file_name, 'a', newline='') as file:
@@ -341,10 +359,10 @@ def main():
         snapshot(robot_x_position, robot_y_position, robot_heading)
         
         # Update log file
-        update_log_file([robot_x_position, 
-                         robot_y_position], 
-                        robot_heading, 
-                        obstacle_type)
+        update_log_file(robot_x_position, 
+                         robot_y_position, 
+                         robot_heading, 
+                         obstacle_type)
 
         # Display current frame 
         show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1)
