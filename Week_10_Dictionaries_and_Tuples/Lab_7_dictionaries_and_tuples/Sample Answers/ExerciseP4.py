@@ -500,7 +500,7 @@ def main():
                                     angle,
                                     sensor_range))
         
-        print('sensors', sensors)
+        
         show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1, sensors=sensors)
         # show_plot(map_coords, goal=goal, obstacles=obstacles, pause=0.1, sensors=[(sensor_start, sensor_end)])
 
