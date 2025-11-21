@@ -1,5 +1,5 @@
 from math import pi
-from code_portfolio import detect_obstacles
+from ExerciseP4 import detect_obstacles
 
 # Define map boundaries
 map_x_min = 0

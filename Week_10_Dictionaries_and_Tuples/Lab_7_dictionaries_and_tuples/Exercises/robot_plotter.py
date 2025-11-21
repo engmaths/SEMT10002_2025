@@ -27,11 +27,19 @@ def rotation_matrix(theta):
     return np.array([[cos(theta),sin(theta)],
                      [-sin(theta),cos(theta)]])
 
-def show_plot(map_coords, goal=None, obstacle=None, pause=0):
+def show_plot(map_coords, goal=None, obstacles=None, pause=0, sensors=[]):
 
     plt.clf()
-    #plot walls
 
+    # plot sensors
+    if sensors:
+        for sensor in sensors:
+            sensor_start = sensor[0]
+            sensor_end = sensor[1]
+            plt.plot([sensor_start[0], sensor_end[0]], 
+                     [sensor_start[1], sensor_end[1]])
+
+    #plot walls
     #This plots the bottom line of the map- from x-min to x_max at y=y_min
     plt.plot([map_coords[0][0], map_coords[0][1]], [map_coords[1][0], map_coords[1][0]], color='red', linewidth=2.0)
     #This plots the top line of the map- from x-min to x_max at y=y_max
@@ -44,12 +52,13 @@ def show_plot(map_coords, goal=None, obstacle=None, pause=0):
     fig = plt.gcf()
     ax = fig.gca()
 
-    if obstacle:
-        obstacle_patch = patches.Rectangle(
-            (obstacle[0][0], obstacle[0][1]), obstacle[1][0], obstacle[1][1],
-            facecolor='gray', label='Obstacle')
-    
-        ax.add_patch(obstacle_patch)
+    if obstacles:
+        for ii in obstacles:
+            obstacle_patch = patches.Rectangle(
+                (ii[0][0], ii[0][1]), ii[1][0], ii[1][1],
+                facecolor='gray', label='Obstacle')
+        
+            ax.add_patch(obstacle_patch)
     
     if goal:
         ax.plot(goal[0], goal[1], 'r*', markersize=15, label='Goal')
