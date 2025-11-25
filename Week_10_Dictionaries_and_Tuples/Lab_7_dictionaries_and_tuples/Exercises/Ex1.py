@@ -16,3 +16,8 @@ exchange_rates = {
     ("EUR", "GBP"): 0.86,
     ("USD", "JPY"): 151.7
 }
+
+exchange_rates[("USD", "EUR")] = 0.91
+
+print(exchange_rates)
+

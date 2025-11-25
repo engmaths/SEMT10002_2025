@@ -43,9 +43,9 @@ def main():
     # OBSTACLE DETECTION TESTS  
     run_test(
         "Test 1 — Sensor pointing vertical up towards obstacle 1",
-        robot_x=2000, robot_y=1000,
+        robot_x=2000, robot_y=2000,
         sensor_angles=[0],  
-        sensor_range=3000,  
+        sensor_range=300,  
         expected=(True, "obstacle")
     )
 
