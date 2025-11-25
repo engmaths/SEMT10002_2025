@@ -31,8 +31,10 @@ def detect_obstacles(   robot_x_position,
     ----------
     robot_x_position (int or float): x coordinate of robot
     robot_y_position (int or float): y coordinate of robot
-    sensor_angles(list of ints or floats): The angle of each sensor relative to the robot heading 
-    sensor_range(int or float): The range within which obstacles can be detected by each sensor
+    sensor_angles(list of ints or floats): The angles of the sensors found using the current robot heading 
+                                           [robot_heading-pi/4, robot_heading, robot_heading+pi/4] 
+    sensor_range(int or float): The range within which obstacles can be detected by each sensor i.e. the length of the 
+                                line representing the sensor (300mm) 
     obstacles (list of tuples): List of obstacle positions and dimensions.
                                 Each obstacle is represented as ((position_x, position_y)
     map_x_min (int or float) : Minimum x coordinate of rectangular boundary
