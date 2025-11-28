@@ -20,3 +20,15 @@ Exercise 1
 
 5. Save your plot as a .pdf file
 '''
+
+import matplotlib.pyplot as plt
+
+x = [0,2,4,5,8,10,13]
+y = [1,3,3,3,4,5,6]
+z = [-3,0,1,0,4,6,7]
+
+plt.plot(x, y, 'o', label='y data')
+plt.plot(x, z, 'r', label='z data')
+plt.xlabel('x')
+plt.savefig('figure_1.pdf')
+plt.show()
