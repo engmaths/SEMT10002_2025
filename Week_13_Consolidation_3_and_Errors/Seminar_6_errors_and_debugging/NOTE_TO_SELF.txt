@@ -1,0 +1,7 @@
+Debug 1 - Code for summing numbers 1 to N.
+Debug 2 - Code for averages
+Debug 3 - Code from consolidation exercise on genetic data processing.
+
+Example 1 is good.
+Example 2 is OK- good if students have written averages.py but not so good if not.
+Example 3 should be changed.
