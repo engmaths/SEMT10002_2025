@@ -49,11 +49,13 @@ def f_gravity_wrap_t(t,x):
     return f_gravity(x)
 
 def main(scipy_method='RK45'):
+    # test f
+    print(f'Gravitational derivatives at surface of Earth: {f_gravity(np.array([R,0,0,0]))}')
     # initial alt
     a0 = 300e3
     r0 = R+a0
      # initial speed
-    v0 = sqrt(0.9*G*M/r0)
+    v0 = 0.9*sqrt(G*M/r0)
     print(f'V0={v0}')
     # initial state
     x0 = np.array([r0,0,0,v0])

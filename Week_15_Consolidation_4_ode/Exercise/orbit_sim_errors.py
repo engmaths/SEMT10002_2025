@@ -53,7 +53,7 @@ def main(scipy_method='RK45'):
     a0 = 300e3
     r0 = R+a0
      # initial speed
-    v0 = sqrt(G*M/r0)
+    v0 = 0.9*sqrt(G*M/r0)
     print(f'V0={v0}')
     # initial state
     x0 = np.array([r0,0,0,v0])
@@ -63,7 +63,7 @@ def main(scipy_method='RK45'):
     delta_e_euler = {}
     delta_e_rk4 = {}
     # timestep
-    for time_step in [0.1,0.3,1,3,10,30,100,300,600,900]:
+    for time_step in [0.1,0.3,1,3,10,30,100]:
         # sim length
         num_steps = int(5400/time_step)
         # Euler
@@ -90,6 +90,8 @@ def main(scipy_method='RK45'):
     ax[1].loglog(delta_e_euler.keys(),delta_e_euler.values(),'-o')
     ax[1].loglog(delta_e_rk4.keys(),delta_e_rk4.values(),'-go')
     ax[1].legend(('Euler','Runge-Kutta'))
+    ax[1].axis('equal')
+    ax[1].grid('on')
     plt.show()
 
 if __name__=='__main__':
