@@ -53,35 +53,43 @@ def main(scipy_method='RK45'):
     a0 = 300e3
     r0 = R+a0
      # initial speed
-    v0 = sqrt(0.9*G*M/r0)
+    v0 = sqrt(G*M/r0)
     print(f'V0={v0}')
     # initial state
     x0 = np.array([r0,0,0,v0])
     # initial energy
     e0 = energy(x0)
+    # error stores
+    delta_e_euler = {}
+    delta_e_rk4 = {}
     # timestep
-    time_step = 10
-    # sim length
-    num_steps = 540
-    # Euler
-    x_store_euler = solve_steps(step_euler,x0,num_steps,time_step)
-    delta_e_euler = energy(x_store_euler[:,-1]) - e0
-    print(f'Energy error from Euler: {delta_e_euler}')
-    # RK4
-    x_store_rk4 = solve_steps(step_rk4,x0,num_steps,time_step)
-    delta_e_rk4 = energy(x_store_rk4[:,-1]) - e0
-    print(f'Energy error from RK: {delta_e_rk4}')
+    for time_step in [0.1,0.3,1,3,10,30,100,300,600,900]:
+        # sim length
+        num_steps = int(5400/time_step)
+        # Euler
+        x_store_euler = solve_steps(step_euler,x0,num_steps,time_step)
+        delta_e_euler[time_step] = abs(energy(x_store_euler[:,-1]) - e0)
+        print(f'Energy error from Euler with timestep {time_step}: {delta_e_euler[time_step]}')
+        # RK4
+        x_store_rk4 = solve_steps(step_rk4,x0,num_steps,time_step)
+        delta_e_rk4[time_step] = abs(energy(x_store_rk4[:,-1]) - e0)
+        print(f'Energy error from RK with timestep {time_step}: {delta_e_rk4[time_step]}')
     # scipy
     output = solve_ivp(f_gravity_wrap_t,[0,num_steps*time_step],x0,method=scipy_method)
     delta_e_scipy = energy(output.y[:,-1]) - e0
     print(f'Energy error from scipy({scipy_method}): {delta_e_scipy}')
-    # comparison plots
-    plt.plot(x_store_euler[0,:],x_store_euler[1,:])
-    plt.plot(x_store_rk4[0,:],x_store_rk4[1,:],'g')
-    plt.plot(output.y[0,:],output.y[1,:],'r')
-    plt.plot(0,0,'go')
-    plt.axis('equal')
-    plt.legend(('Euler','Runge-Kutta',f'scipy ({scipy_method})'))
+    # trajectory plots
+    fig,ax = plt.subplots(1,2)
+    ax[0].plot(x_store_euler[0,:],x_store_euler[1,:])
+    ax[0].plot(x_store_rk4[0,:],x_store_rk4[1,:],'g')
+    ax[0].plot(output.y[0,:],output.y[1,:],'r')
+    ax[0].plot(0,0,'go')
+    ax[0].axis('equal')
+    ax[0].legend(('Euler','Runge-Kutta',f'scipy ({scipy_method})'))
+    # error comparison
+    ax[1].loglog(delta_e_euler.keys(),delta_e_euler.values(),'-o')
+    ax[1].loglog(delta_e_rk4.keys(),delta_e_rk4.values(),'-go')
+    ax[1].legend(('Euler','Runge-Kutta'))
     plt.show()
 
 if __name__=='__main__':
