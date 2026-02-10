@@ -23,6 +23,8 @@ def test_vectors():
 	assert(dot_product(vector1, vector2)==11)
 
 test_vectors()
+
+Re-write the code above to use classes.
 '''
 
 class Vector:
