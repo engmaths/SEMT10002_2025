@@ -3,13 +3,11 @@ import matplotlib.pyplot as plt
 import random
 import copy
 
-ALIVE = 1 
-DEAD = 0 
+ALIVE = 1
+DEAD = 0
 GRID_LENGTH = 100
-#ALIVE INDEX is the index of the single cell which is set to 1.
-ALIVE_INDEX = 10
-#ALIVE probability is the fraction of a random grid which is set to 1.
-ALIVE_PROBABILITY = 0.1 
+ALIVE_INDEX = 10         # The index of the cell which is set to 1.
+ALIVE_PROBABILITY = 0.1  # The fraction of a random grid which is set to 1.
 NUM_STEPS = 100
 
 def create_singleton_grid(length, alive_index):
@@ -36,18 +34,20 @@ def create_random_grid(length, alive_probability):
     grid (numpy array)
   '''
 
-  #Your code goes here
-  grid = [0 for _ in range(length)] 
+  grid = []
+
+  #Your code goes here 
 
   return np.array(grid, dtype=np.int8)
 
-def update_cell(old_value, left_neighbour, right_neighbour):
+
+def update_cell(left_neighbour, old_value):
   '''
   Calculates the new value for a cell given the old value and the values of the left and right neighbours
   Inputs:
-    old_value (integer)
     left_neighbour (integer)
-    right_neighbour (integer)
+    old_value (integer)
+    
   Returns:
     new_value (integer)
   '''
@@ -65,20 +65,17 @@ def update_grid(old_grid, rule=None):
     new_grid (numpy array)
     '''
 
+  new_grid = []
+
   #Your code goes here
-  new_grid = np.zeros(len(old_grid))
 
   return np.array(new_grid, dtype=np.int8)
 
 def test_update_cell():
 
-  assert update_cell(0,0,0)==0, "test 1"
-  assert update_cell(1,0,0)==0, "test 2"
-  assert update_cell(0,1,0)==1, "test 3"
-  assert update_cell(0,0,1)==0, "test 4"
-  assert update_cell(1,1,0)==0, "test 5"
-  assert update_cell(l1,0,1)==0, "test 6"
-  #Add the rest of the tests here - you should cover inputs of (0, 1, 1) and (1, 1, 1)
+  assert update_cell(0,0)==0, "test 1"
+  assert update_cell(1,0)==1, "test 2"
+  #Add the rest of the tests here - you should cover inputs of (0, 1) and (1, 1)
 
 def test_update_grid():
 
@@ -96,17 +93,17 @@ def plot_grids(grids):
   ax1 = fig.add_subplot(211)
   ax1.set_axis_off()
   image = np.zeros((len(grids), GRID_LENGTH), dtype = np.int8)
-  #Copy CA_grid into the image array
 
+  #Copy CA_grid into the image array
   for (index, grid) in enumerate(grids):
     image[index, :] = grid
-  #Display the image
 
+  #Display the image
   ax1.imshow(image, interpolation='none', cmap='RdPu')
   plt.show()
 
 def run_tests():
-
+  
   print("Testing update cell\n")
   test_update_cell()
   print("Tests passed")
@@ -124,16 +121,18 @@ def main():
   grid = create_singleton_grid(GRID_LENGTH, ALIVE_INDEX)
   #grid = create_random_grid(GRID_LENGTH, ALIVE_PROBABILITY)
 
-  grids = []
-
   #Use a list to store all the grids we generate
   grids = []
+
   #Repeatedly apply the update rule for a certain number of steps
   for t in range(NUM_STEPS):
+
     #Calculate the values in each position for the new grid
     new_grid = update_grid(grid)
+
     #Overwrite the old grid with the new grid
     grid=copy.deepcopy(new_grid)
+
     #Add the updated grid to our store
     grids.append(new_grid)
 
