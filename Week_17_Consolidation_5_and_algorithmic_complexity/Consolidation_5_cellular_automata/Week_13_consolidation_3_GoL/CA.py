@@ -90,7 +90,7 @@ def test_update_grid():
 def plot_grids(grids):
 
   fig = plt.figure(figsize=(10, 10))
-  ax1 = fig.add_subplot(211)
+  ax1 = fig.add_subplot(111)
   ax1.set_axis_off()
   image = np.zeros((len(grids), GRID_LENGTH), dtype = np.int8)
 
